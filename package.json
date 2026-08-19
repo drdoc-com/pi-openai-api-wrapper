@@ -1,0 +1,20 @@
+{
+  "name": "pi-openai-api-wrapper",
+  "version": "1.0.0",
+  "description": "Web Endpoint as PI Package for PI Agent (pi.dev), with Ollama API and OpenAI API compability.",
+  "private": true,
+  "pi": {
+    "extensions": [
+      "src/index.ts"
+    ]
+  },
+  "dependencies": {
+    "@earendil-works/pi-coding-agent": "latest",
+    "express": "^5.2.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.2.0",
+    "typescript": "^7.0.2"
+  }
+}
