@@ -13,6 +13,12 @@ Exposes native Ollama endpoints `/api/chat` and `/api/generate` (including basic
 **Autonomous Sessions:**
 Each incoming API request spins up an independent Pi agent session using the specified model.
 
+## Installation
+
+```bash
+pi install git:https://github.com/drdoc-com/pi-openai-api-wrapper
+```
+
 ## Configuration
 
 Set the listening port via environment variable:
