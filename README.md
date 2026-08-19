@@ -15,6 +15,12 @@ Each incoming API request spins up an independent Pi agent session using the spe
 
 ## Installation
 
+via npm:
+```bash
+pi install npm:@drdoc-com/pi-openai-api-wrapper
+```
+
+or via git:
 ```bash
 pi install git:https://github.com/drdoc-com/pi-openai-api-wrapper
 ```
