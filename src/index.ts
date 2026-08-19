@@ -38,9 +38,10 @@ function extractLastUserMessage(messages: any[]): string | undefined {
   return ensureString(lastUserMsg.content);
 }
 
-async function getTempSession(model) {
-  // 2. Pass model object into session creation
+async function getTempSession(model: any) {
+  // Pass model object into session creation
   const { session } = await createAgentSession({
+    // Model Übergabe führt zu Fehlern..
     //model: localModel,
     //model: model || DEFAULT_MODEL,
     sessionManager: SessionManager.inMemory()
@@ -90,24 +91,19 @@ async function executeSessionPrompt(session: any, promptText: string): Promise<s
  */
 export default function (pi: any) {
   const port = process.env.PI_API_WRAPPER_PORT ? parseInt(process.env.PI_API_WRAPPER_PORT, 10) : DEFAULT_PORT;
+  const debug = process.env.PI_API_WRAPPER_DEBUG === true || process.env.PI_API_WRAPPER_DEBUG === 'true' || process.env.PI_API_WRAPPER_DEBUG === '1';
   const app = express();
 
   app.use(express.json());
 
-
-
   app.get('/test', async (req: Request, res: Response) => {
     try {
-      const { prompt, model, stream } = req.body;
-
-      //if (!prompt || typeof prompt !== 'string') {
-      //  return res.status(400).json({ error: 'Es wurde kein gültiger "prompt"-String im Body übergeben.' });
-      //}
-
+      // Das Lesen von req.body bei einem GET-Request wurde entfernt, 
+      // da die Variablen unbenutzt waren.
       return res.json({ hello: "Hello World!" });
 
     } catch (error) {
-      console.error("Ollama Generate Error:", error);
+      console.error("Test Endpoint Error:", error);
       return res.status(500).json({ error: (error as Error).message || `${LOG_PREFIX}Ein unbekannter Fehler ist aufgetreten.` });
     }
   });
@@ -137,6 +133,9 @@ export default function (pi: any) {
 
       // Fallback-Prüfung, falls das Ergebnis ein Objekt mit 'text' oder ein reiner String ist.
       //const content = result?.text !== undefined ? result.text : result;
+
+      if (debug)
+        console.log(`${LOG_PREFIX}OpenAI Completion Response: `, content);
 
       return res.json({
         id: `chatcmpl-${Date.now()}`,
@@ -182,7 +181,8 @@ export default function (pi: any) {
       const resultText = await executeSessionPrompt(session, lastUserMessage);
       const createdAt = new Date().toISOString();
 
-      console.error("Ollama Chat Response:", resultText);
+      if (debug)
+        console.log(`${LOG_PREFIX}Ollama Chat Response: `, resultText);
 
       if (stream) {
         // Da 'await' auf session.prompt() blockiert, steht das finale Ergebnis 
@@ -232,13 +232,16 @@ export default function (pi: any) {
         return res.status(400).json({ error: `${LOG_PREFIX}Es wurde kein gültiger "prompt" im Body übergeben (Ollama Generate).` });
       }
       const safePrompt = ensureString(prompt);
-
       const session = await getTempSession(model);
 
       //const result = await session.prompt(safePrompt); 
       //const resultText = result?.text !== undefined ? result.text : result;
-      const resultText = await executeSessionPrompt(session, lastUserMessage);
+
+      const resultText = await executeSessionPrompt(session, safePrompt);
       const createdAt = new Date().toISOString();
+
+      if (debug)
+        console.log(`${LOG_PREFIX}Ollama Generate Response: `, resultText);
 
       if (stream) {
         res.setHeader('Content-Type', 'application/x-ndjson');
