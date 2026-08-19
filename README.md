@@ -19,3 +19,8 @@ Set the listening port via environment variable:
 ```bash
 export PI_API_WRAPPER_PORT=8090
 ```
+
+Enable Debugging:
+```bash
+export PI_API_WRAPPER_DEBUG=1
+```
