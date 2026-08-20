@@ -1,6 +1,6 @@
 {
   "name": "@drdoc-com/pi-openai-api-wrapper",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Web Endpoint as PI Package for PI Agent (pi.dev), with Ollama API and OpenAI API compability.",
   "type": "module",
   "keywords": [
