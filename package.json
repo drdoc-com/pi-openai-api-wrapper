@@ -21,6 +21,7 @@
     "type": "git",
     "url": "https://github.com/drdoc-com/pi-openai-api-wrapper.git"
   },
+  "author": "Dr.DOC GmbH, DE-80802 Munich",
   "dependencies": {
     "express": "^5.2.1"
   },
