@@ -2,16 +2,29 @@
   "name": "@drdoc-com/pi-openai-api-wrapper",
   "version": "1.0.2",
   "description": "Web Endpoint as PI Package for PI Agent (pi.dev), with Ollama API and OpenAI API compability.",
-  "keywords": ["pi-package", "pi-agent", "openai", "api", "ollama"],
+  "type": "module",
+  "keywords": [
+    "pi-package",
+    "pi-agent",
+    "openai",
+    "api",
+    "ollama"
+  ],
   "private": false,
   "pi": {
     "extensions": [
-      "src/index.ts"
+      "./src/index.ts"
     ]
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/drdoc-com/pi-openai-api-wrapper.git"
+  },
   "dependencies": {
-    "@earendil-works/pi-coding-agent": "latest",
     "express": "^5.2.1"
+  },
+  "peerDependencies": {
+    "@earendil-works/pi-coding-agent": "*"
   },
   "devDependencies": {
     "@types/express": "^5.0.6",
